@@ -25,7 +25,9 @@
 
 #ifdef __AVX2__
 #include <immintrin.h>
-// Include SIMD helpers from phase 1
+// Include SIMD helpers — skip if already provided by hydrods.hpp
+#ifndef HYDRO_SIMD_DEFINED_
+#define HYDRO_SIMD_DEFINED_
 namespace hydro_simd {
 inline bool contains_i32(const int32_t* keys, int count, int32_t target) {
     const __m256i t = _mm256_set1_epi32(target);
@@ -43,6 +45,7 @@ inline bool contains_i32(const int32_t* keys, int count, int32_t target) {
     return false;
 }
 }
+#endif // HYDRO_SIMD_DEFINED_
 #endif
 
 // PAUSE instruction for spinlocks

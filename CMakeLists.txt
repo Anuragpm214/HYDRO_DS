@@ -24,5 +24,14 @@ find_package(OpenMP REQUIRED)
 target_compile_options(master_benchmark PRIVATE -mavx2 -mfma -O3 -pthread -fopenmp)
 target_link_libraries(master_benchmark PRIVATE pthread OpenMP::OpenMP_CXX)
 
+# Compare benchmark: single-threaded vs concurrent HydroDS
+add_executable(compare_benchmark compare_benchmark.cpp)
+target_include_directories(compare_benchmark PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/engine
+)
+target_compile_options(compare_benchmark PRIVATE -mavx2 -mfma -O3 -pthread -fopenmp)
+target_link_libraries(compare_benchmark PRIVATE pthread OpenMP::OpenMP_CXX)
+
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "CXX Flags:  ${CMAKE_CXX_FLAGS}")

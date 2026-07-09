@@ -38,6 +38,9 @@ namespace hydro_simd {
 
 #ifdef __AVX2__
 
+#ifndef HYDRO_SIMD_DEFINED_
+#define HYDRO_SIMD_DEFINED_
+
 /// SIMD linear scan for int32 keys on sorted data (with early termination)
 inline bool contains_i32(const int32_t* keys, int count, int32_t target) {
     const __m256i t = _mm256_set1_epi32(target);
@@ -72,6 +75,8 @@ inline bool contains_i64(const int64_t* keys, int count, int64_t target) {
     }
     return false;
 }
+
+#endif // HYDRO_SIMD_DEFINED_
 
 #endif 
 // __AVX2__
