@@ -461,14 +461,14 @@ The benchmark uses the following fixed workload (defined in `master_benchmark.cp
 
 ### 1. Single-Threaded Core Operations Latency *(Tested at 1 thread)*
 
-| Operation | HydroDS (C=256) | CSB+-Tree (TLX) | ALEX (Learned Index) | Winner |
+| Operation | HydroDS (Optimized, C=256) | CSB+-Tree (TLX) | ALEX (Learned Index) | Winner |
 |:----------|:----------------|:-----------------|:---------------------|:-------|
-| **Insert (5M)** | 7.5090 s | 7.0767 s | 3.6405 s | ALEX |
-| **Search (500K)** | 0.4975 s | 0.7908 s | 0.0770 s | ALEX |
-| **Range Small (50K × 100)** | 0.0881 s | 0.1797 s | 0.0633 s | ALEX |
-| **Range Medium (5K × 10K)** | 0.1986 s | 0.4387 s | 0.2904 s | HydroDS |
-| **Range Large (50 × 500K)** | 0.0966 s | 0.2098 s | 0.1327 s | HydroDS |
-| **Delete (500K)** | 0.7702 s | 1.2507 s | 0.2961 s | ALEX |
+| **Insert (5M)** | 2.4080 s | 7.0767 s | 3.6405 s | HydroDS |
+| **Search (500K)** | 0.1572 s | 0.7908 s | 0.0770 s | ALEX |
+| **Range Small (50K × 100)** | 0.0361 s | 0.1797 s | 0.0633 s | HydroDS |
+| **Range Medium (5K × 10K)** | 0.1007 s | 0.4387 s | 0.2904 s | HydroDS |
+| **Range Large (50 × 500K)** | 0.0497 s | 0.2098 s | 0.1327 s | HydroDS |
+| **Delete (500K)** | 0.2878 s | 1.2507 s | 0.2961 s | HydroDS |
 
 ![Latency Plot](artifacts/latency_plot.png)
 
