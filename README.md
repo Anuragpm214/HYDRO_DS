@@ -43,14 +43,7 @@ HydroDS avoids the extreme, latency-spiking array reallocations seen in standard
 
 > Thread scalability for 5 Million elements inserted and queried concurrently.
 
-| Threads | Insert (s) | Search (s) | Range Sml (s) | Range Med (s) | Range Lrg (s) | Delete (s) | Memory (MB) |
-|:--------|:-----------|:-----------|:--------------|:--------------|:--------------|:-----------|:------------|
-| **1** | 7.5090 | 0.4975 | 0.0881 | 0.1986 | 0.0966 | 0.7702 | 33 |
-| **2** | 7.2150 | 0.3369 | 0.0633 | 0.1730 | 0.0860 | 0.6437 | 30 |
-| **4** | 7.8671 | 0.2561 | 0.0293 | 0.0629 | 0.0323 | 0.5671 | 31 |
-| **8** | 8.3546 | 0.2533 | 0.0272 | 0.0402 | 0.0295 | 0.5296 | 30 |
-| **16** | 8.5909 | 0.2677 | 0.0304 | 0.0373 | 0.0231 | 0.5367 | 27 |
-| **32** | 8.8903 | 0.2472 | 0.0245 | 0.0321 | 0.0195 | 0.4522 | 29 |
+![Concurrent Scaling](benchmark/plots/Concurrent_Scaling.png)
 
 ---
 <div align="center">
