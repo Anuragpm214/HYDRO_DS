@@ -125,30 +125,24 @@ private:
         bool is_empty()    const { return count == 0; }
         bool needs_split() const { return count > C; }
 
-        // -- Binary search (standard, branchful) ------------------------------
+        // -- Binary search (Branchless) ------------------------------
         int lower_bound_pos(Key x) const {
-            int lo = 0, hi = count;
-            while (lo < hi) {
-                int mid = lo + ((hi - lo) >> 1);
-                if (keys[mid] < x) lo = mid + 1;
-                else               hi = mid;
+            const Key* base = keys;
+            int len = count;
+            while (len > 1) {
+                int half = len / 2;
+                const Key* mid = base + half;
+                // This typically compiles to a conditional move (cmov)
+                base = (*mid < x) ? mid : base;
+                len -= half;
             }
-            return lo;
+            return static_cast<int>((base < keys + count && *base < x) ? (base - keys + 1) : (base - keys));
         }
 
         // -- Point query ------------------------------------------------------
         bool contains(Key x) const {
-#ifdef __AVX2__
-            if constexpr (std::is_same_v<Key, int32_t>) {
-                return hydro_simd::contains_i32(keys, count, x);
-            } else if constexpr (std::is_same_v<Key, int64_t>) {
-                return hydro_simd::contains_i64(keys, count, x);
-            } else
-#endif
-            {
-                int pos = lower_bound_pos(x);
-                return pos < count && keys[pos] == x;
-            }
+            int pos = lower_bound_pos(x);
+            return pos < count && keys[pos] == x;
         }
 
         // -- Sorted insert with edge-biased fast paths -----------------------
@@ -214,19 +208,62 @@ private:
     }
 
     // -------------------------------------------------------------------------
-    //  Bucket lookup: binary search over flat bucket_max_ array
+    //  Bucket lookup: Model-based prediction + Exponential Search (ALEX style)
     // -------------------------------------------------------------------------
     int find_bucket(Key x) const {
-        int lo = 0;
-        int hi = static_cast<int>(bucket_max_.size()) - 1;
-        while (lo <= hi) {
-            int mid = (lo + hi) >> 1;
-            if (bucket_max_[mid] >= x) hi = mid - 1;
-            else                       lo = mid + 1;
+        int n = static_cast<int>(bucket_max_.size());
+        if (n <= 1) return 0;
+
+        Key min_k = buckets_.front()->min_key();
+        Key max_k = bucket_max_.back();
+        
+        int pred;
+        if (x <= min_k) pred = 0;
+        else if (x >= max_k) pred = n - 1;
+        else {
+            double slope = static_cast<double>(n) / static_cast<double>(max_k - min_k);
+            pred = static_cast<int>((x - min_k) * slope);
+            if (pred < 0) pred = 0;
+            if (pred >= n) pred = n - 1;
         }
-        if (lo >= static_cast<int>(buckets_.size()))
-            lo = static_cast<int>(buckets_.size()) - 1;
-        return lo;
+
+        // Prefetch the most likely bucket into L1 cache while we correct the prediction
+        __builtin_prefetch(buckets_[pred], 0, 3);
+
+        // Exponential search correction
+        if (bucket_max_[pred] >= x) {
+            // Target might be at pred or to the left
+            if (pred == 0 || bucket_max_[pred - 1] < x) return pred; // Lucky guess! O(1)
+            
+            int bound = 1;
+            while (pred - bound >= 0 && bucket_max_[pred - bound] >= x) {
+                bound <<= 1;
+            }
+            int lo = std::max(0, pred - bound);
+            int hi = pred - (bound >> 1);
+            
+            while (lo <= hi) {
+                int mid = (lo + hi) >> 1;
+                if (bucket_max_[mid] >= x) hi = mid - 1;
+                else                       lo = mid + 1;
+            }
+            return lo;
+        } else {
+            // Target is to the right
+            int bound = 1;
+            while (pred + bound < n && bucket_max_[pred + bound] < x) {
+                bound <<= 1;
+            }
+            int hi = std::min(n - 1, pred + bound);
+            int lo = pred + (bound >> 1);
+            
+            while (lo <= hi) {
+                int mid = (lo + hi) >> 1;
+                if (bucket_max_[mid] >= x) hi = mid - 1;
+                else                       lo = mid + 1;
+            }
+            return (lo >= n) ? n - 1 : lo;
+        }
     }
 
     void update_index(int i) {

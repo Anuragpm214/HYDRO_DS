@@ -8,30 +8,20 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Optimize for cache architecture
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -O3 -march=native -mtune=native")
 
-# Main unified benchmark executable
-add_executable(master_benchmark master_benchmark.cpp)
+find_package(OpenMP REQUIRED)
 
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "CXX Flags:  ${CMAKE_CXX_FLAGS}")
+
+
+# Master Benchmark
+add_executable(master_benchmark benchmark/master_benchmark.cpp)
 target_include_directories(master_benchmark PRIVATE 
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/engine
     ${CMAKE_CURRENT_SOURCE_DIR}/tlx_baseline
     ${CMAKE_CURRENT_SOURCE_DIR}/alex_baseline/src/core
 )
-
-find_package(OpenMP REQUIRED)
-
-# Enforce hardware optimizations and OpenMP
 target_compile_options(master_benchmark PRIVATE -mavx2 -mfma -O3 -pthread -fopenmp)
 target_link_libraries(master_benchmark PRIVATE pthread OpenMP::OpenMP_CXX)
 
-# Compare benchmark: single-threaded vs concurrent HydroDS
-add_executable(compare_benchmark compare_benchmark.cpp)
-target_include_directories(compare_benchmark PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/engine
-)
-target_compile_options(compare_benchmark PRIVATE -mavx2 -mfma -O3 -pthread -fopenmp)
-target_link_libraries(compare_benchmark PRIVATE pthread OpenMP::OpenMP_CXX)
-
-message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
-message(STATUS "CXX Flags:  ${CMAKE_CXX_FLAGS}")
