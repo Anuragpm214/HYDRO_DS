@@ -1,0 +1,76 @@
+Structure,Workload,Threads,Total_Ops,Time_Seconds,Throughput_MOps,Latency_ns,Speedup
+HydroDS-Concurrent (OLC),100% Read-Only,1,2000000,0.617790,3.2373,308.89,1.00
+HydroDS-Concurrent (OLC),100% Read-Only,2,2000000,0.406191,4.9238,203.10,1.52
+HydroDS-Concurrent (OLC),100% Read-Only,4,2000000,0.479201,4.1736,239.60,1.29
+HydroDS-Concurrent (OLC),100% Read-Only,8,2000000,0.553191,3.6154,276.60,1.12
+HydroDS-Concurrent (OLC),100% Read-Only,16,2000000,0.549556,3.6393,274.78,1.12
+TLX B-Tree (RWLock),100% Read-Only,1,2000000,0.654619,3.0552,327.31,1.00
+TLX B-Tree (RWLock),100% Read-Only,2,2000000,0.460478,4.3433,230.24,1.42
+TLX B-Tree (RWLock),100% Read-Only,4,2000000,0.452552,4.4194,226.28,1.45
+TLX B-Tree (RWLock),100% Read-Only,8,2000000,0.474742,4.2128,237.37,1.38
+TLX B-Tree (RWLock),100% Read-Only,16,2000000,0.503704,3.9706,251.85,1.30
+ALEX (Global Mutex),100% Read-Only,1,2000000,0.145583,13.7378,72.79,1.00
+ALEX (Global Mutex),100% Read-Only,2,2000000,0.556896,3.5913,278.45,0.26
+ALEX (Global Mutex),100% Read-Only,4,2000000,0.855235,2.3385,427.62,0.17
+ALEX (Global Mutex),100% Read-Only,8,2000000,1.349363,1.4822,674.68,0.11
+ALEX (Global Mutex),100% Read-Only,16,2000000,1.636017,1.2225,818.01,0.09
+PGM-Index (Global Mutex),100% Read-Only,1,2000000,0.795176,2.5152,397.59,1.00
+PGM-Index (Global Mutex),100% Read-Only,2,2000000,1.835100,1.0899,917.55,0.43
+PGM-Index (Global Mutex),100% Read-Only,4,2000000,2.610400,0.7662,1305.20,0.30
+PGM-Index (Global Mutex),100% Read-Only,8,2000000,3.506345,0.5704,1753.17,0.23
+PGM-Index (Global Mutex),100% Read-Only,16,2000000,4.117451,0.4857,2058.73,0.19
+std::multiset (Global Mutex),100% Read-Only,1,2000000,2.665294,0.7504,1332.65,1.00
+std::multiset (Global Mutex),100% Read-Only,2,2000000,4.274873,0.4679,2137.44,0.62
+std::multiset (Global Mutex),100% Read-Only,4,2000000,6.416645,0.3117,3208.32,0.42
+std::multiset (Global Mutex),100% Read-Only,8,2000000,6.650780,0.3007,3325.39,0.40
+std::multiset (Global Mutex),100% Read-Only,16,2000000,7.887913,0.2536,3943.96,0.34
+HydroDS-Concurrent (OLC),90% Read / 10% Write,1,2000000,0.653880,3.0587,326.94,1.00
+HydroDS-Concurrent (OLC),90% Read / 10% Write,2,2000000,0.518355,3.8584,259.18,1.26
+HydroDS-Concurrent (OLC),90% Read / 10% Write,4,2000000,0.560014,3.5713,280.01,1.17
+HydroDS-Concurrent (OLC),90% Read / 10% Write,8,2000000,0.640820,3.1210,320.41,1.02
+HydroDS-Concurrent (OLC),90% Read / 10% Write,16,2000000,0.735440,2.7195,367.72,0.89
+TLX B-Tree (RWLock),90% Read / 10% Write,1,2000000,0.805010,2.4844,402.50,1.00
+TLX B-Tree (RWLock),90% Read / 10% Write,2,2000000,3.395648,0.5890,1697.82,0.24
+TLX B-Tree (RWLock),90% Read / 10% Write,4,2000000,2.431539,0.8225,1215.77,0.33
+TLX B-Tree (RWLock),90% Read / 10% Write,8,2000000,2.545128,0.7858,1272.56,0.32
+TLX B-Tree (RWLock),90% Read / 10% Write,16,2000000,2.720219,0.7352,1360.11,0.30
+ALEX (Global Mutex),90% Read / 10% Write,1,2000000,0.241645,8.2766,120.82,1.00
+ALEX (Global Mutex),90% Read / 10% Write,2,2000000,0.673940,2.9676,336.97,0.36
+ALEX (Global Mutex),90% Read / 10% Write,4,2000000,0.973585,2.0543,486.79,0.25
+ALEX (Global Mutex),90% Read / 10% Write,8,2000000,1.727089,1.1580,863.54,0.14
+ALEX (Global Mutex),90% Read / 10% Write,16,2000000,1.963547,1.0186,981.77,0.12
+PGM-Index (Global Mutex),90% Read / 10% Write,1,2000000,0.842738,2.3732,421.37,1.00
+PGM-Index (Global Mutex),90% Read / 10% Write,2,2000000,1.858201,1.0763,929.10,0.45
+PGM-Index (Global Mutex),90% Read / 10% Write,4,2000000,3.379605,0.5918,1689.80,0.25
+PGM-Index (Global Mutex),90% Read / 10% Write,8,2000000,3.740619,0.5347,1870.31,0.23
+PGM-Index (Global Mutex),90% Read / 10% Write,16,2000000,4.255140,0.4700,2127.57,0.20
+std::multiset (Global Mutex),90% Read / 10% Write,1,2000000,2.794053,0.7158,1397.03,1.00
+std::multiset (Global Mutex),90% Read / 10% Write,2,2000000,4.466994,0.4477,2233.50,0.63
+std::multiset (Global Mutex),90% Read / 10% Write,4,2000000,6.288730,0.3180,3144.37,0.44
+std::multiset (Global Mutex),90% Read / 10% Write,8,2000000,6.761494,0.2958,3380.75,0.41
+std::multiset (Global Mutex),90% Read / 10% Write,16,2000000,7.038134,0.2842,3519.07,0.40
+HydroDS-Concurrent (OLC),50% Read / 50% Write,1,2000000,0.720921,2.7742,360.46,1.00
+HydroDS-Concurrent (OLC),50% Read / 50% Write,2,2000000,0.685993,2.9155,343.00,1.05
+HydroDS-Concurrent (OLC),50% Read / 50% Write,4,2000000,0.812074,2.4628,406.04,0.89
+HydroDS-Concurrent (OLC),50% Read / 50% Write,8,2000000,0.965803,2.0708,482.90,0.75
+HydroDS-Concurrent (OLC),50% Read / 50% Write,16,2000000,1.094414,1.8275,547.21,0.66
+TLX B-Tree (RWLock),50% Read / 50% Write,1,2000000,0.803062,2.4905,401.53,1.00
+TLX B-Tree (RWLock),50% Read / 50% Write,2,2000000,3.308215,0.6046,1654.11,0.24
+TLX B-Tree (RWLock),50% Read / 50% Write,4,2000000,3.564225,0.5611,1782.11,0.23
+TLX B-Tree (RWLock),50% Read / 50% Write,8,2000000,3.927516,0.5092,1963.76,0.20
+TLX B-Tree (RWLock),50% Read / 50% Write,16,2000000,4.219924,0.4739,2109.96,0.19
+ALEX (Global Mutex),50% Read / 50% Write,1,2000000,0.397617,5.0300,198.81,1.00
+ALEX (Global Mutex),50% Read / 50% Write,2,2000000,1.008516,1.9831,504.26,0.39
+ALEX (Global Mutex),50% Read / 50% Write,4,2000000,1.533858,1.3039,766.93,0.26
+ALEX (Global Mutex),50% Read / 50% Write,8,2000000,2.391344,0.8363,1195.67,0.17
+ALEX (Global Mutex),50% Read / 50% Write,16,2000000,2.609571,0.7664,1304.79,0.15
+PGM-Index (Global Mutex),50% Read / 50% Write,1,2000000,0.772313,2.5896,386.16,1.00
+PGM-Index (Global Mutex),50% Read / 50% Write,2,2000000,1.563064,1.2795,781.53,0.49
+PGM-Index (Global Mutex),50% Read / 50% Write,4,2000000,3.335265,0.5997,1667.63,0.23
+PGM-Index (Global Mutex),50% Read / 50% Write,8,2000000,4.180807,0.4784,2090.40,0.18
+PGM-Index (Global Mutex),50% Read / 50% Write,16,2000000,4.644253,0.4306,2322.13,0.17
+std::multiset (Global Mutex),50% Read / 50% Write,1,2000000,3.040518,0.6578,1520.26,1.00
+std::multiset (Global Mutex),50% Read / 50% Write,2,2000000,4.840430,0.4132,2420.21,0.63
+std::multiset (Global Mutex),50% Read / 50% Write,4,2000000,6.609447,0.3026,3304.72,0.46
+std::multiset (Global Mutex),50% Read / 50% Write,8,2000000,7.348594,0.2722,3674.30,0.41
+std::multiset (Global Mutex),50% Read / 50% Write,16,2000000,7.529474,0.2656,3764.74,0.40

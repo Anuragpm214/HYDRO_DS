@@ -17,6 +17,7 @@ message(STATUS "CXX Flags:  ${CMAKE_CXX_FLAGS}")
 set(HYDRO_INCLUDES
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/hydrods_core
+    ${CMAKE_CURRENT_SOURCE_DIR}/hydrods_core/hydrods_multi_threaded
     ${CMAKE_CURRENT_SOURCE_DIR}/baselines
     ${CMAKE_CURRENT_SOURCE_DIR}/baselines/tlx
     ${CMAKE_CURRENT_SOURCE_DIR}/baselines/alex
@@ -46,3 +47,9 @@ add_executable(range_benchmark benchmark/range/range_benchmark.cpp)
 target_include_directories(range_benchmark PRIVATE ${HYDRO_INCLUDES})
 target_compile_options(range_benchmark PRIVATE -mavx2 -mfma -O3 -pthread -fopenmp)
 target_link_libraries(range_benchmark PRIVATE pthread OpenMP::OpenMP_CXX)
+
+# 5. Concurrency Benchmark Target (Multi-threaded scaling)
+add_executable(concurrency_benchmark benchmark/concurrency/concurrency_benchmark.cpp)
+target_include_directories(concurrency_benchmark PRIVATE ${HYDRO_INCLUDES})
+target_compile_options(concurrency_benchmark PRIVATE -mavx2 -mfma -O3 -pthread -fopenmp)
+target_link_libraries(concurrency_benchmark PRIVATE pthread OpenMP::OpenMP_CXX)

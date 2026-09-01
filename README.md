@@ -14,11 +14,11 @@ By replacing traditional branching with **branchless execution (`cmov` / gallopi
 - **Branchless Model-Driven Search**: Point lookups utilize piecewise model estimation and branchless gallium search, achieving **0.28%–3.6%** branch misprediction rates.
 - **Cache-Aligned Contiguous Buckets ($C=256$)**: Data is partitioned into contiguous cache-line chunks, maximizing Hardware Stream Prefetching and Memory-Level Parallelism (MLP).
 - **Fluid Rebalancing**: Dynamic insertions propagate elements through adjacent bucket headroom without explosive restructuring or global locking penalties.
-- **Concurrent Scaling**: Optimistic Lock Coupling (OLC) variant (`hydrods_concurrent.hpp`) provides lock-free read paths with high multi-threaded scaling.
+- **Concurrent Scaling (OLC)**: Optimistic Lock Coupling variant (`hydrods_core/hydrods_multi_threaded/hydrods_concurrent.hpp`) provides lock-free read paths and version-controlled bucket writes for multi-core scaling.
 
 ---
 
-## 🔬 Hardware Performance Evaluation (5-Run Averaged)
+## 🔬 Single-Threaded Evaluation (5-Run Averaged PMU Data)
 
 All benchmarks are evaluated across **1,000,000 keys** with **5-run averaging** against state-of-the-art baselines:
 - **ALEX** (*Learned Index — SIGMOD 2020*)
@@ -104,6 +104,27 @@ HydroDS executes reverse fluid rebalancing for deletions with high memory compac
 
 ---
 
+## 🧵 Multi-Threaded Concurrency Evaluation (1 - 16 Cores)
+
+HydroDS utilizes fine-grained **Optimistic Lock Coupling (OLC)**, providing lock-free read paths while traditional baselines suffer from global lock contention.
+
+### Read-Heavy (90% Read / 10% Write — 2M Operations)
+
+| Structure | 1 Thread | 2 Threads | 4 Threads | 8 Threads | 16 Threads | Speedup at 16T |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **HydroDS-Concurrent (OLC)** | **3.06 MOps/s** | **3.86 MOps/s** | **3.57 MOps/s** | **3.12 MOps/s** | **2.72 MOps/s** | **0.89× (Stable)** |
+| ALEX (Global Mutex) | 8.28 MOps/s | 2.97 MOps/s | 2.05 MOps/s | 1.16 MOps/s | 1.02 MOps/s | 0.12× *(collapse)* |
+| TLX B-Tree (RWLock) | 2.48 MOps/s | 0.59 MOps/s | 0.82 MOps/s | 0.79 MOps/s | 0.74 MOps/s | 0.30× *(stall)* |
+| PGM-Index (Global Mutex) | 2.37 MOps/s | 1.08 MOps/s | 0.59 MOps/s | 0.53 MOps/s | 0.47 MOps/s | 0.20× |
+| std::multiset (Global Mutex) | 0.72 MOps/s | 0.45 MOps/s | 0.32 MOps/s | 0.30 MOps/s | 0.28 MOps/s | 0.40× |
+
+<div align="center">
+  <img src="benchmark/concurrency/results/concurrent_throughput_90%_read___10%_write.png" width="48%" />
+  <img src="benchmark/concurrency/results/concurrent_speedup_90%_read___10%_write.png" width="48%" />
+</div>
+
+---
+
 ## 🛠️ Building & Running Benchmarks
 
 ### Prerequisites
@@ -117,11 +138,14 @@ HydroDS executes reverse fluid rebalancing for deletions with high memory compac
 # 1. Enable hardware performance counter access (run once)
 sudo sysctl -w kernel.perf_event_paranoid=-1
 
-# 2. Build and run any benchmark suite (5-run averaged)
+# 2. Build and run single-threaded benchmarks (5-run averaged)
 bash benchmark/insert/run_benchmark.sh
 bash benchmark/range/run_benchmark.sh
 bash benchmark/search/run_benchmark.sh
 bash benchmark/delete/run_benchmark.sh
+
+# 3. Build and run multi-threaded scaling suite (1 to 16 threads)
+bash benchmark/concurrency/run_benchmark.sh
 ```
 
 All CSV records and publication figures are exported into `benchmark/<suite>/results/`.
