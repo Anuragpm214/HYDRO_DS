@@ -1,0 +1,6 @@
+[submodule "pgm_baseline"]
+	path = baselines/pgm
+	url = https://github.com/gvinciguerra/PGM-index
+[submodule "art_baseline"]
+	path = baselines/art
+	url = https://github.com/flode/ARTSynchronized
