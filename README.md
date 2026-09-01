@@ -42,8 +42,8 @@ HydroDS exhibits high throughput on streaming/sequential patterns and robust ske
 | **Branch Misprediction Rate** | **4.91%** | 5.57% | 10.40% | 5.73% | 4.95% |
 
 <div align="center">
-  <img src="benchmark/insert/results/insert_throughput.png" width="48%" />
-  <img src="benchmark/insert/results/insert_ipc.png" width="48%" />
+  <img src="benchmark/insert/results/insert_throughput.png" width="48%" alt="Insert Throughput" />
+  <img src="benchmark/insert/results/insert_ipc.png" width="48%" alt="Insert IPC" />
 </div>
 
 ---
@@ -61,8 +61,8 @@ For medium-to-large scans, HydroDS's contiguous memory layout delivers top-tier 
 | **10k Scan Latency** | **14.45 µs** | 21.90 µs | 25.34 µs | 149.78 µs | 1,434.46 µs |
 
 <div align="center">
-  <img src="benchmark/range/results/range_scan_throughput.png" width="48%" />
-  <img src="benchmark/range/results/range_latency.png" width="48%" />
+  <img src="benchmark/range/results/range_scan_throughput.png" width="48%" alt="Range Scan Throughput" />
+  <img src="benchmark/range/results/range_latency.png" width="48%" alt="Range Latency" />
 </div>
 
 ---
@@ -80,8 +80,8 @@ HydroDS guarantees high predictability across mixed hit/miss and Zipfian skewed 
 | **LLC Miss Rate (%)** | **1.29% – 2.59%** | 1.74% – 3.52% | 4.77% – 5.97% | 16.55% – 27.76% | 33.72% – 45.62% |
 
 <div align="center">
-  <img src="benchmark/search/results/search_throughput.png" width="48%" />
-  <img src="benchmark/search/results/search_latency.png" width="48%" />
+  <img src="benchmark/search/results/search_throughput.png" width="48%" alt="Search Throughput" />
+  <img src="benchmark/search/results/search_latency.png" width="48%" alt="Search Latency" />
 </div>
 
 ---
@@ -98,8 +98,8 @@ HydroDS executes reverse fluid rebalancing for deletions with high memory compac
 | **Non-Existing Keys** | 16.63 ns (60.12M/s) | 10.56 ns (94.73M/s) | 70.15 ns (14.26M/s) | 137.35 ns (7.28M/s) | 29.13 ns (34.33M/s) |
 
 <div align="center">
-  <img src="benchmark/delete/results/delete_throughput.png" width="48%" />
-  <img src="benchmark/delete/results/delete_latency.png" width="48%" />
+  <img src="benchmark/delete/results/delete_throughput.png" width="48%" alt="Delete Throughput" />
+  <img src="benchmark/delete/results/delete_latency.png" width="48%" alt="Delete Latency" />
 </div>
 
 ---
@@ -119,8 +119,8 @@ HydroDS utilizes fine-grained **Optimistic Lock Coupling (OLC)**, providing lock
 | std::multiset (Global Mutex) | 0.72 MOps/s | 0.45 MOps/s | 0.32 MOps/s | 0.30 MOps/s | 0.28 MOps/s | 0.40× |
 
 <div align="center">
-  <img src="benchmark/concurrency/results/concurrent_throughput_90%_read___10%_write.png" width="48%" />
-  <img src="benchmark/concurrency/results/concurrent_speedup_90%_read___10%_write.png" width="48%" />
+  <img src="benchmark/concurrency/results/concurrent_throughput_90_read___10_write.png" width="48%" alt="Concurrent Throughput 90:10" />
+  <img src="benchmark/concurrency/results/concurrent_speedup_90_read___10_write.png" width="48%" alt="Concurrent Speedup 90:10" />
 </div>
 
 ---
